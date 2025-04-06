@@ -39,6 +39,11 @@ if (!fs.existsSync(ATTENDANCE_FILE)) {
   fs.writeFileSync(ATTENDANCE_FILE, JSON.stringify([], null, 2));
 }
 
+// Helper function to save data
+const saveAttendanceData = (data) => {
+  fs.writeFileSync(ATTENDANCE_FILE, JSON.stringify(data, null, 2));
+};
+
 // Endpoint to create a code and return HTML view with QR code
 app.post("/api/attendance", async (req, res) => {
   try {
