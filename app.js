@@ -45,7 +45,7 @@ const saveAttendanceData = (data) => {
 };
 
 // Endpoint to create a code and return HTML view with QR code
-app.post("/api/attendance", async (req, res) => {
+app.get("/api/attendance/checkin", async (req, res) => {
   try {
     // Generate a random 6-digit code
     const code = Math.floor(100000 + Math.random() * 900000).toString();
