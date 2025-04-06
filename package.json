@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "node app.js"
+    "dev": "node app.js",
+    "build":"node -v"
   },
   "dependencies": {
     "ejs": "^3.1.10",
