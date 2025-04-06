@@ -48,7 +48,7 @@ app.post("/api/attendance", async (req, res) => {
 
     // Create QR code as data URL
     const qrCodeDataUrl = await QRCode.toDataURL(
-      `${BASE_URL}/api/attendance/${code}`,
+      `${'https://amanda-test.onrender.com'}/api/attendance/${code}`,
       {
         width: 300,
         margin: 2,
