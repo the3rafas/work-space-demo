@@ -48,7 +48,7 @@ app.post("/api/attendance", async (req, res) => {
 
     // Create QR code as data URL
     const qrCodeDataUrl = await QRCode.toDataURL(
-      `${'https://amanda-test.onrender.com'}/api/attendance/${code}`,
+      `${'https://amanda-test.onrender.com'}/api/attendance/aka/${code}`,
       {
         width: 300,
         margin: 2,
@@ -90,8 +90,8 @@ app.post("/api/attendance", async (req, res) => {
   }
 });
 
-// Update attendance with checkout time
-app.put("/api/attendance/:code", (req, res) => {
+// Update attendance with checkout time and return thank you page
+app.get("/api/attendance/aka/:code", (req, res) => {
   try {
     const { code } = req.params;
     const now = new Date().toISOString();
@@ -103,9 +103,8 @@ app.put("/api/attendance/:code", (req, res) => {
     );
 
     if (recordIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: "Attendance record not found",
+      return res.status(404).render('error', {
+        message: "Attendance record not found"
       });
     }
 
@@ -118,16 +117,16 @@ app.put("/api/attendance/:code", (req, res) => {
 
     saveAttendanceData(attendanceData);
 
-    res.json({
-      success: true,
-      message: "Checkout recorded successfully",
-      data: attendanceData[recordIndex],
+    // Render thank you page with the check-out time
+    res.render('thankYou', {
+      checkOutTime: new Date(now).toLocaleString(),
+      code: code
     });
+
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({
-      success: false,
-      error: "Internal Server Error",
+    res.status(500).render('error', {
+      message: "Internal Server Error"
     });
   }
 });
